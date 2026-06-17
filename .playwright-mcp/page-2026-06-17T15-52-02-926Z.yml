@@ -1,0 +1,211 @@
+- generic [ref=e45]:
+  - banner [ref=e46]:
+    - generic [ref=e47]:
+      - generic [ref=e48]: 🍗
+      - generic [ref=e49]:
+        - paragraph [ref=e50]: BANCA DE COXINHA
+        - paragraph [ref=e51]:
+          - text: Cliente Demo
+          - generic [ref=e52]: "@cliente"
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - paragraph [ref=e55]: Saldo
+        - paragraph [ref=e244]: R$ 20,00
+      - button "Trocar usuário" [ref=e57]
+  - generic [ref=e58]:
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - generic [ref=e63]:
+            - paragraph [ref=e64]: Inserir crédito · ENTRADA
+            - heading "Insira uma cédula" [level=2] [ref=e65]
+          - generic [ref=e66]:
+            - button "R$ 2 inserir" [ref=e67]:
+              - generic "Cédula de R$ 2" [ref=e69]:
+                - generic [ref=e70]: R$
+                - text: "2"
+              - generic [ref=e71]: inserir
+            - button "R$ 5 inserir" [ref=e72]:
+              - generic "Cédula de R$ 5" [ref=e74]:
+                - generic [ref=e75]: R$
+                - text: "5"
+              - generic [ref=e76]: inserir
+            - button "R$ 10 inserir" [ref=e77]:
+              - generic "Cédula de R$ 10" [ref=e79]:
+                - generic [ref=e80]: R$
+                - text: "10"
+              - generic [ref=e81]: inserir
+            - button "R$ 20 inserir" [ref=e82]:
+              - generic "Cédula de R$ 20" [ref=e84]:
+                - generic [ref=e85]: R$
+                - text: "20"
+              - generic [ref=e86]: inserir
+            - button "R$ 50 inserir" [ref=e87]:
+              - generic "Cédula de R$ 50" [ref=e89]:
+                - generic [ref=e90]: R$
+                - text: "50"
+              - generic [ref=e91]: inserir
+            - button "R$ 100 inserir" [ref=e92]:
+              - generic "Cédula de R$ 100" [ref=e94]:
+                - generic [ref=e95]: R$
+                - text: "100"
+              - generic [ref=e96]: inserir
+            - button "R$ 200 inserir" [ref=e97]:
+              - generic "Cédula de R$ 200" [ref=e99]:
+                - generic [ref=e100]: R$
+                - text: "200"
+              - generic [ref=e101]: inserir
+        - generic [ref=e102]:
+          - paragraph [ref=e103]: Comprar · SAIDA
+          - heading "Escolha o sabor" [level=2] [ref=e104]
+          - generic [ref=e105]:
+            - button "FRANGO R$ 8,00" [ref=e106]:
+              - generic [ref=e107]: FRANGO
+              - generic [ref=e108]: R$ 8,00
+            - button "CATUPIRY R$ 10,00" [ref=e109]:
+              - generic [ref=e110]: CATUPIRY
+              - generic [ref=e111]: R$ 10,00
+            - button "CARNE R$ 9,00" [ref=e112]:
+              - generic [ref=e113]: CARNE
+              - generic [ref=e114]: R$ 9,00
+            - button "QUEIJO R$ 6,00" [ref=e115]:
+              - generic [ref=e116]: QUEIJO
+              - generic [ref=e117]: R$ 6,00
+          - generic [ref=e118]:
+            - paragraph [ref=e119]: Cédula de pagamento · notaPaga
+            - generic [ref=e120]:
+              - button "R$ 2" [ref=e121]:
+                - generic "Cédula de R$ 2" [ref=e123]:
+                  - generic [ref=e124]: R$
+                  - text: "2"
+              - button "R$ 5" [ref=e125]:
+                - generic "Cédula de R$ 5" [ref=e127]:
+                  - generic [ref=e128]: R$
+                  - text: "5"
+              - button "R$ 10" [ref=e129]:
+                - generic "Cédula de R$ 10" [ref=e131]:
+                  - generic [ref=e132]: R$
+                  - text: "10"
+              - button "R$ 20" [active] [ref=e133]:
+                - generic "Cédula de R$ 20" [ref=e135]:
+                  - generic [ref=e136]: R$
+                  - text: "20"
+              - button "R$ 50" [ref=e137]:
+                - generic "Cédula de R$ 50" [ref=e139]:
+                  - generic [ref=e140]: R$
+                  - text: "50"
+              - button "R$ 100" [ref=e141]:
+                - generic "Cédula de R$ 100" [ref=e143]:
+                  - generic [ref=e144]: R$
+                  - text: "100"
+              - button "R$ 200" [ref=e145]:
+                - generic "Cédula de R$ 200" [ref=e147]:
+                  - generic [ref=e148]: R$
+                  - text: "200"
+          - generic [ref=e149]:
+            - generic [ref=e150] [cursor=pointer]:
+              - 'checkbox "Promocional (Strategy: −R$2, mín. R$2)" [ref=e152]'
+              - generic [ref=e155]: "Promocional (Strategy: −R$2, mín. R$2)"
+            - generic [ref=e280]:
+              - generic [ref=e281]: R$ 8,00
+              - generic [ref=e282]: →
+              - generic [ref=e283]: R$ 6,00
+          - button "Comprar FRANGO pagando R$ 20,00" [ref=e285]
+      - generic [ref=e158]:
+        - generic [ref=e159]:
+          - paragraph [ref=e160]: Estoque de cédulas · SlotNota
+          - heading "Gaveta do caixa" [level=2] [ref=e161]
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - generic [ref=e164]: "2"
+            - generic [ref=e165]: "20"
+            - generic [ref=e166]: cédulas
+          - generic [ref=e167]:
+            - generic [ref=e168]: "5"
+            - generic [ref=e169]: "20"
+            - generic [ref=e170]: cédulas
+          - generic [ref=e171]:
+            - generic [ref=e172]: "10"
+            - generic [ref=e173]: "10"
+            - generic [ref=e174]: cédulas
+          - generic [ref=e175]:
+            - generic [ref=e176]: "20"
+            - generic [ref=e245]: "11"
+            - generic [ref=e178]: cédulas
+          - generic [ref=e179]:
+            - generic [ref=e180]: "50"
+            - generic [ref=e181]: "5"
+            - generic [ref=e182]: cédulas
+          - generic [ref=e183]:
+            - generic [ref=e184]: "100"
+            - generic [ref=e185]: "3"
+            - generic [ref=e186]: cédulas
+          - generic [ref=e187]:
+            - generic [ref=e188]: "200"
+            - generic [ref=e189]: "2"
+            - generic [ref=e190]: cédulas
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - generic [ref=e193]: Denominação
+            - combobox "Denominação" [ref=e194]:
+              - option "R$ 2" [selected]
+              - option "R$ 5"
+              - option "R$ 10"
+              - option "R$ 20"
+              - option "R$ 50"
+              - option "R$ 100"
+              - option "R$ 200"
+          - generic [ref=e195]:
+            - generic [ref=e196]: Quantidade
+            - spinbutton "Quantidade" [ref=e197]: "10"
+          - button "Abastecer" [ref=e198]
+      - generic [ref=e200]:
+        - generic [ref=e201]:
+          - generic [ref=e202]:
+            - paragraph [ref=e203]: Extrato · Movimentações
+            - heading "Histórico" [level=2] [ref=e204]
+          - generic [ref=e205]:
+            - generic [ref=e206]: Command · desfazer última transação
+            - button "Deste cliente" [ref=e207]
+            - button "Global" [ref=e208]
+            - generic [ref=e209]:
+              - textbox "Filtrar" [ref=e210]:
+                - /placeholder: clienteIds
+                - text: "1"
+              - button "Filtrar" [ref=e211]
+        - list [ref=e212]:
+          - listitem [ref=e246]:
+            - generic [ref=e247]:
+              - generic [ref=e248]: ENTRADA
+              - generic [ref=e249]: 17/06, 12:51:57
+              - generic [ref=e250]: nota R$ 20,00 · valor R$ 20,00
+    - generic [ref=e217]:
+      - generic [ref=e218]:
+        - paragraph [ref=e219]: Design Patterns · ao vivo
+        - heading "O que rodou por baixo" [level=2] [ref=e220]
+      - generic [ref=e251]:
+        - generic [ref=e252]:
+          - generic [ref=e253]: Inserir crédito
+          - generic [ref=e254]: 12:51:57
+        - paragraph [ref=e255]: "A cédula entra no caixa: saldo += valor e o slot da nota +1."
+        - generic [ref=e256]:
+          - generic [ref=e258]:
+            - generic [ref=e259]: Facade
+            - generic [ref=e260]: orquestra a operação
+          - generic [ref=e261]:
+            - generic [ref=e262]: →
+            - generic [ref=e263]:
+              - generic [ref=e264]: Command
+              - generic [ref=e265]: ENTRADA registrada
+          - generic [ref=e266]:
+            - generic [ref=e267]: →
+            - generic [ref=e268]:
+              - generic [ref=e269]: SlotNota
+              - generic [ref=e270]: estoque +1
+        - paragraph [ref=e271]: R$ 20 inserida · saldo R$ 0,00 → R$ 20,00 · slot R$20 = 11
+      - generic [ref=e237]:
+        - paragraph [ref=e238]: Histórico de ações
+        - list [ref=e239]:
+          - listitem [ref=e272]:
+            - generic [ref=e275]: Carregar cliente
+            - generic [ref=e276]: 12:51:20

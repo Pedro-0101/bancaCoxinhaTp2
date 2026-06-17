@@ -1,0 +1,30 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - paragraph [ref=e5]: 🍗 CAIXA ELETRÔNICO
+    - heading "Banca de Coxinha" [level=1] [ref=e6]
+    - paragraph [ref=e7]:
+      - text: Insira cédulas, compre salgados e veja os
+      - emphasis [ref=e8]: design patterns
+      - text: trabalhando por baixo.
+  - generic [ref=e9]:
+    - generic [ref=e10]:
+      - paragraph [ref=e11]: Entrar
+      - heading "Escolha um cliente" [level=2] [ref=e12]
+      - generic [ref=e13]: carregando clientes…
+      - generic [ref=e15]:
+        - 'textbox "login (ex.: cliente)" [ref=e16]'
+        - button "Entrar" [disabled] [ref=e17]
+    - generic [ref=e18]:
+      - paragraph [ref=e19]: Novo
+      - heading "Cadastrar cliente" [level=2] [ref=e20]
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Nome
+          - textbox "Nome" [ref=e24]
+        - generic [ref=e25]:
+          - generic [ref=e26]: Login
+          - textbox "Login" [ref=e27]
+        - generic [ref=e28]:
+          - generic [ref=e29]: Saldo inicial (R$)
+          - spinbutton "Saldo inicial (R$)" [ref=e30]: "0"
+        - button "Cadastrar e entrar" [ref=e31] [cursor=pointer]
