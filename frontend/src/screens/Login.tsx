@@ -57,7 +57,7 @@ export function Login({
       </header>
 
       {!conexaoOk && (
-        <div className="mx-auto mb-6 max-w-2xl rounded-xl border border-pimenta/50 bg-pimenta/15 px-4 py-3 text-sm">
+        <div className="mx-auto mb-6 max-w-2xl rounded-none border border-pimenta/50 bg-pimenta/15 px-4 py-3 text-sm">
           Back-end fora do ar. Verifique se a API está rodando em{' '}
           <code className="font-mono text-crust">localhost:5141</code>.{' '}
           <button onClick={onReload} className="underline">
@@ -87,7 +87,7 @@ export function Login({
                   <button
                     onClick={() => submitLogin(c.login)}
                     disabled={busy !== null}
-                    className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left transition-colors hover:border-crust/50 hover:bg-crust/10 disabled:opacity-50"
+                    className="flex w-full items-center justify-between rounded-none border border-white/10 bg-white/5 px-4 py-3 text-left transition-colors hover:border-crust/50 hover:bg-crust/10 disabled:opacity-50"
                   >
                     <span>
                       <span className="block font-medium text-cream">{c.nome}</span>
@@ -111,7 +111,7 @@ export function Login({
               value={loginField}
               onChange={(e) => setLoginField(e.target.value)}
               placeholder="login (ex.: cliente)"
-              className="flex-1 rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 font-mono text-sm text-cream placeholder:text-cream/30 focus:border-crust focus:outline-none"
+              className="flex-1 rounded-none border border-white/10 bg-black/30 px-3 py-2.5 font-mono text-sm text-cream placeholder:text-cream/30 focus:border-crust focus:outline-none"
             />
             <Button type="submit" disabled={busy !== null || !loginField.trim()}>
               {busy === 'login' ? <Spinner /> : 'Entrar'}
@@ -132,7 +132,7 @@ export function Login({
                 value={novo.nome}
                 onChange={(e) => setNovo({ ...novo, nome: e.target.value })}
                 required
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-sm text-cream focus:border-crust focus:outline-none"
+                className="w-full rounded-none border border-white/10 bg-black/30 px-3 py-2.5 text-sm text-cream focus:border-crust focus:outline-none"
               />
             </label>
             <label className="block">
@@ -141,7 +141,7 @@ export function Login({
                 value={novo.login}
                 onChange={(e) => setNovo({ ...novo, login: e.target.value })}
                 required
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 font-mono text-sm text-cream focus:border-crust focus:outline-none"
+                className="w-full rounded-none border border-white/10 bg-black/30 px-3 py-2.5 font-mono text-sm text-cream focus:border-crust focus:outline-none"
               />
             </label>
             <label className="block">
@@ -152,7 +152,7 @@ export function Login({
                 step="1"
                 value={novo.saldo}
                 onChange={(e) => setNovo({ ...novo, saldo: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 readout text-sm text-cream focus:border-crust focus:outline-none"
+                className="w-full rounded-none border border-white/10 bg-black/30 px-3 py-2.5 readout text-sm text-cream focus:border-crust focus:outline-none"
               />
             </label>
             <Button type="submit" disabled={busy !== null} className="mt-1">

@@ -77,22 +77,29 @@ export const api = {
     }),
 
   // 6. Comprar coxinha (SAIDA)
-  comprar: (clienteId: number, sabor: string, notaPaga: number, promocional: boolean) =>
+  comprar: (
+    clienteId: number,
+    itens: { sabor: string; quantidade: number }[],
+    notasPagas: number[],
+    promocional: boolean,
+    trocoExato = false,
+  ) =>
     request<CompraResponse>('/api/caixa/compra', {
       method: 'POST',
-      body: JSON.stringify({ clienteId, sabor, notaPaga, promocional }),
+      body: JSON.stringify({ clienteId, itens, notasPagas, promocional, trocoExato }),
     }),
 
   // 7. Trocar sabor (ESTORNO + nova SAIDA)
   trocarSabor: (
     clienteId: number,
     movimentacaoId: number,
+    saborAntigo: string,
     novoSabor: string,
     promocional: boolean,
   ) =>
     request<TrocaResponse>('/api/caixa/troca', {
       method: 'POST',
-      body: JSON.stringify({ clienteId, movimentacaoId, novoSabor, promocional }),
+      body: JSON.stringify({ clienteId, movimentacaoId, saborAntigo, novoSabor, promocional }),
     }),
 
   // 8. Desfazer última transação (Command)

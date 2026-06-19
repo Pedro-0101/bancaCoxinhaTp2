@@ -33,15 +33,17 @@ campo `login`.
 
 - **Inserir crédito:** insere uma cédula de valor X → `saldo += X` e o slot dessa cédula +1.
   Só aceita as 7 denominações válidas.
-- **Comprar coxinha:** o cliente paga inserindo uma cédula (`notaPaga`). A cédula entra no caixa
-  e credita o saldo; o `preco` é debitado; o troco (`notaPaga - preco`) é devolvido em cédulas
-  físicas. O saldo pré-existente pode complementar o pagamento.
-- **Troco:** composto pelas **maiores cédulas disponíveis primeiro**. Como a menor cédula é R$ 2,
-  um troco **ímpar exige uma cédula de R$ 5**. Se não houver combinação exata, a operação inteira
-  é revertida e retorna **HTTP 400** com a mensagem exata
-  `Transação impossível: falta de cédulas específicas`.
-- **Troca de sabores:** estorna a compra original e cria uma nova compra do novo sabor com a
-  mesma cédula.
+- **Comprar coxinha:** o cliente paga inserindo **uma ou mais cédulas** (`notasPagas`, ex.:
+  `[5, 2, 2]`). O campo `itens` é uma lista de `{sabor, quantidade}` — permite comprar
+  **múltiplos sabores diferentes** em uma única transação. A soma dos valores **deve cobrir o
+  preço total** (senão erro 400). As cédulas entram no caixa; o troco (`total pago - precoTotal`)
+  é devolvido em cédulas. **O que não puder ser devolvido em cédulas é creditado no `saldo`**
+  do cliente (campo `trocoEmCredito` na resposta).
+- **Troco:** composto pelas **maiores cédulas disponíveis primeiro** (backtracking; acha a
+  combinação se existir, ex.: R$ 100 só com cédulas de R$ 5). Troco **ímpar exige uma cédula de
+  R$ 5**. Sem cédulas para o valor exato, devolve o máximo possível e credita o restante no saldo.
+- **Troca de sabores:** estorna a compra original e cria uma nova compra trocando o(s) item(ns)
+  cujo sabor é igual a `saborAntigo` pelo `novoSabor`.
 - **Desfazer:** desfaz a última transação (gera ESTORNO). Pode filtrar por cliente.
 - **`promocional: true`** aplica R$ 2 de desconto no preço (mínimo R$ 2).
 
@@ -121,41 +123,61 @@ Erros: `404` cliente inexistente; `400` denominação inválida.
 ### 6. Comprar coxinha (SAIDA)
 `POST /api/caixa/compra`
 
-Request:
+Request: `itens` é uma lista de `{sabor, quantidade}` — permite comprar múltiplos sabores em
+uma única transação. `notasPagas` é uma lista de cédulas (a soma deve ser >= preço total).
+`trocoExato` (opcional, default `false`): quando `true`, a compra só é concluída se houver
+cédulas para o troco **exato**, senão retorna o erro "Transação impossível"; quando `false`,
+devolve o máximo em cédulas e credita o resto no saldo.
+
+Exemplo comprando uma coxinha de FRANGO (R$ 8) pagando com R$ 20:
 ```json
-{ "clienteId": 1, "sabor": "FRANGO", "notaPaga": 20, "promocional": false }
+{ "clienteId": 1, "itens": [{"sabor": "FRANGO", "quantidade": 1}], "notasPagas": [20], "promocional": false, "trocoExato": false }
 ```
-Response `200`:
+Exemplo pagando com várias cédulas (R$ 5 + R$ 2 + R$ 2 = R$ 9):
+```json
+{ "clienteId": 1, "itens": [{"sabor": "CARNE", "quantidade": 1}], "notasPagas": [5, 2, 2], "promocional": false }
+```
+Exemplo comprando múltiplos sabores em uma transação (2 FRANGO + 1 CATUPIRY = R$ 26):
+```json
+{ "clienteId": 1, "itens": [{"sabor": "FRANGO", "quantidade": 2}, {"sabor": "CATUPIRY", "quantidade": 1}], "notasPagas": [20, 10], "promocional": false }
+```
+Response `200` (`itens` = itens comprados agregados; `pagamento` = cédulas inseridas agregadas;
+`trocoEmCredito` = parte do troco que não pôde ser devolvida em cédulas e foi creditada no saldo):
 ```json
 {
   "movimentacaoId": 2,
-  "sabor": "FRANGO",
+  "itens": [ { "sabor": "FRANGO", "quantidade": 1, "precoUnitario": 8.00 } ],
   "preco": 8.00,
+  "pagamento": [ { "denominacao": 20, "quantidade": 1 } ],
   "troco": [ { "denominacao": 10, "quantidade": 1 }, { "denominacao": 2, "quantidade": 1 } ],
-  "saldo": 20.00
+  "trocoEmCredito": 0.00,
+  "saldo": 0.00
 }
 ```
 Erros:
-- `400` `Transação impossível: falta de cédulas específicas` (sem troco possível).
-- `400` saldo insuficiente, sabor inválido ou cédula inválida.
+- `400` se a cédula não cobre o preço (ex.: pagar coxinha de R$ 10 com nota de R$ 5).
+- `400` `Transação impossível: falta de cédulas específicas` quando `trocoExato: true` e o caixa
+  não tem cédulas para o troco exato (transação revertida).
+- `400` sabor inválido ou cédula com denominação inválida.
 - `404` cliente inexistente.
 
 ### 7. Trocar sabor (ESTORNO + nova SAIDA)
 `POST /api/caixa/troca`
 
-Request (`movimentacaoId` = id de uma compra SAIDA anterior):
+Request (`movimentacaoId` = id de uma compra SAIDA anterior). `saborAntigo` indica qual(is)
+item(ns) terão o sabor trocado; `novoSabor` é o novo sabor:
 ```json
-{ "clienteId": 1, "movimentacaoId": 2, "novoSabor": "QUEIJO", "promocional": false }
+{ "clienteId": 1, "movimentacaoId": 2, "saborAntigo": "FRANGO", "novoSabor": "QUEIJO", "promocional": false }
 ```
 Response `200`:
 ```json
 {
   "estornoId": 5,
   "novaMovimentacaoId": 6,
-  "saborAnterior": "FRANGO",
-  "novoSabor": "QUEIJO",
+  "itens": [ { "sabor": "QUEIJO", "quantidade": 1, "precoUnitario": 6.00 } ],
   "preco": 6.00,
   "troco": [ { "denominacao": 10, "quantidade": 1 }, { "denominacao": 2, "quantidade": 2 } ],
+  "trocoEmCredito": 0.00,
   "saldo": 20.00
 }
 ```
@@ -177,9 +199,11 @@ Response `200` (a movimentação de ESTORNO gerada):
   "tipoMovimentacao": "ESTORNO",
   "valorNota": 20.00,
   "sabor": "FRANGO",
+  "quantidade": 1,
   "valor": 8.00,
   "troco": [],
-  "movimentacaoOrigemId": 2
+  "movimentacaoOrigemId": 2,
+  "itens": [ { "sabor": "FRANGO", "quantidade": 1, "precoUnitario": 8.00 } ]
 }
 ```
 Erros: `400` se não há transação para desfazer (no filtro ou global).
@@ -238,9 +262,12 @@ Response `200` (ordenado do mais recente para o mais antigo):
     "tipoMovimentacao": "ESTORNO",
     "valorNota": 20.00,
     "sabor": "FRANGO",
+    "quantidade": 1,
     "valor": 8.00,
+    "pagamento": [],
     "troco": [],
-    "movimentacaoOrigemId": 2
+    "movimentacaoOrigemId": 2,
+    "itens": [ { "sabor": "FRANGO", "quantidade": 1, "precoUnitario": 8.00 } ]
   },
   {
     "id": 2,
@@ -248,9 +275,12 @@ Response `200` (ordenado do mais recente para o mais antigo):
     "tipoMovimentacao": "SAIDA",
     "valorNota": 20.00,
     "sabor": "FRANGO",
+    "quantidade": 1,
     "valor": 8.00,
+    "pagamento": [ { "denominacao": 20, "quantidade": 1 } ],
     "troco": [ { "denominacao": 10, "quantidade": 1 }, { "denominacao": 2, "quantidade": 1 } ],
-    "movimentacaoOrigemId": null
+    "movimentacaoOrigemId": null,
+    "itens": [ { "sabor": "FRANGO", "quantidade": 1, "precoUnitario": 8.00 } ]
   }
 ]
 ```
@@ -276,6 +306,6 @@ Erros: `404` cliente inexistente.
 
 1. `POST /api/auth/login {"login":"cliente"}` → guarde `id`.
 2. `POST /api/caixa/credito {"clienteId":1,"denominacao":20}`.
-3. `POST /api/caixa/compra {"clienteId":1,"sabor":"FRANGO","notaPaga":20,"promocional":false}`.
+3. `POST /api/caixa/compra {"clienteId":1,"itens":[{"sabor":"FRANGO","quantidade":1}],"notasPagas":[20],"promocional":false}`.
 4. `GET /api/extrato/1` para atualizar o histórico.
 5. `POST /api/caixa/desfazer {"clienteIds":[1]}` para reverter.

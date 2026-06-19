@@ -22,7 +22,7 @@ interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    'bg-crust text-chassis hover:bg-crust-soft disabled:bg-crust/30 disabled:text-chassis/50',
+    'bg-crust text-black hover:bg-crust-soft disabled:bg-crust/30 disabled:text-black/50',
   ghost:
     'bg-white/5 text-cream hover:bg-white/10 border border-white/10 disabled:opacity-40',
   danger: 'bg-pimenta/90 text-white hover:bg-pimenta disabled:opacity-40',
@@ -32,7 +32,7 @@ export function Button({ variant = 'primary', className = '', ...props }: BtnPro
   return (
     <button
       {...props}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crust disabled:cursor-not-allowed ${VARIANTS[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-none px-4 py-2.5 font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crust disabled:cursor-not-allowed ${VARIANTS[variant]} ${className}`}
     />
   )
 }

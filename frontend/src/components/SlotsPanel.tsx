@@ -51,7 +51,7 @@ export function SlotsPanel({ slots, busy, onAbastecer }: SlotsPanelProps) {
           return (
             <div
               key={s.denominacao}
-              className={`relative flex flex-col items-center gap-1 rounded-xl border bg-black/20 px-2 py-3 transition-all ${
+              className={`relative flex flex-col items-center gap-1 rounded-none border bg-black/20 px-2 py-3 transition-all ${
                 mudou
                   ? subiu
                     ? 'border-folha/70 bg-folha/10 ring-2 ring-folha/50'
@@ -62,14 +62,14 @@ export function SlotsPanel({ slots, busy, onAbastecer }: SlotsPanelProps) {
               {mudou && (
                 <span
                   className={`animate-drop absolute -right-1.5 -top-2 rounded-full px-1.5 py-0.5 font-mono text-[11px] font-bold shadow ${
-                    subiu ? 'bg-folha text-chassis' : 'bg-pimenta text-white'
+                    subiu ? 'bg-folha text-black' : 'bg-pimenta text-white'
                   }`}
                 >
                   {subiu ? `+${delta}` : delta}
                 </span>
               )}
               <span
-                className="flex h-6 w-12 items-center justify-center rounded font-mono text-xs font-bold text-white/95"
+                className="flex h-6 w-12 items-center justify-center rounded-none font-mono text-xs font-bold text-white/95"
                 style={{
                   background: `linear-gradient(135deg, ${notaColor(s.denominacao)}, color-mix(in oklab, ${notaColor(s.denominacao)} 70%, black))`,
                 }}
@@ -105,7 +105,7 @@ export function SlotsPanel({ slots, busy, onAbastecer }: SlotsPanelProps) {
             value={denom}
             onChange={(e) => setDenom(Number(e.target.value))}
             disabled={busy !== null}
-            className="rounded-lg border border-white/10 bg-black/30 px-3 py-2 font-mono text-sm text-cream focus:border-crust focus:outline-none disabled:opacity-40"
+            className="rounded-none border border-white/10 bg-black/30 px-3 py-2 font-mono text-sm text-cream focus:border-crust focus:outline-none disabled:opacity-40"
           >
             {DENOMINACOES.map((d) => (
               <option key={d} value={d}>
@@ -122,7 +122,7 @@ export function SlotsPanel({ slots, busy, onAbastecer }: SlotsPanelProps) {
             value={qtd}
             onChange={(e) => setQtd(e.target.value)}
             disabled={busy !== null}
-            className="w-24 rounded-lg border border-white/10 bg-black/30 px-3 py-2 readout text-sm text-cream focus:border-crust focus:outline-none disabled:opacity-40"
+            className="w-24 rounded-none border border-white/10 bg-black/30 px-3 py-2 readout text-sm text-cream focus:border-crust focus:outline-none disabled:opacity-40"
           />
         </label>
         <Button type="submit" variant="ghost" disabled={busy !== null}>

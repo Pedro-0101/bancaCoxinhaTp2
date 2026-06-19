@@ -1,19 +1,19 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Chassi do caixa — escuro quente, como aço pintado da banca */
-  --color-chassis: #17120d;
-  --color-chassis-2: #221a12;
-  --color-chassis-3: #2e2418;
+  /* Chassi — preto */
+  --color-chassis: #0a0a0a;
+  --color-chassis-2: #141414;
+  --color-chassis-3: #1e1e1e;
 
-  /* Massa dourada da coxinha — destaque primário */
-  --color-crust: #f2b84b;
-  --color-crust-deep: #e8a33d;
-  --color-crust-soft: #f7cd78;
+  /* Amarelo — destaque primário */
+  --color-crust: #facc15;
+  --color-crust-deep: #eab308;
+  --color-crust-soft: #fde047;
 
-  /* Superfície clara — catupiry / papel */
-  --color-cream: #fbf3e4;
-  --color-cream-2: #f3e7cf;
+  /* Superfície clara — branco */
+  --color-cream: #ffffff;
+  --color-cream-2: #f5f5f5;
 
   /* Estados */
   --color-pimenta: #d6453d;
@@ -53,7 +53,7 @@ select:disabled {
 body {
   margin: 0;
   background:
-    radial-gradient(1200px 600px at 70% -10%, #2a2014 0%, transparent 60%),
+    radial-gradient(1200px 600px at 70% -10%, #1a1a1a 0%, transparent 60%),
     var(--color-chassis);
   color: var(--color-cream);
   font-family: var(--font-sans);
@@ -65,7 +65,7 @@ body {
 .panel {
   background: linear-gradient(180deg, var(--color-chassis-3), var(--color-chassis-2));
   border: 1px solid rgb(255 255 255 / 0.06);
-  border-radius: 18px;
+  border-radius: 0;
   box-shadow:
     0 1px 0 rgb(255 255 255 / 0.05) inset,
     0 18px 40px -24px rgb(0 0 0 / 0.9);
@@ -123,7 +123,7 @@ body {
 *::-webkit-scrollbar { width: 10px; height: 10px; }
 *::-webkit-scrollbar-thumb {
   background: rgb(255 255 255 / 0.1);
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

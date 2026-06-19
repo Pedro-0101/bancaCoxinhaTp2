@@ -12,7 +12,7 @@ export interface PatternEvent {
 function Chip({ nome, papel, dim }: { nome: string; papel: string; dim?: boolean }) {
   return (
     <span
-      className={`group relative inline-flex flex-col rounded-lg border px-2.5 py-1 ${
+      className={`group relative inline-flex flex-col rounded-none border px-2.5 py-1 ${
         dim
           ? 'border-white/10 bg-white/5 text-cream/70'
           : 'border-crust/40 bg-crust/15 text-cream'
@@ -45,7 +45,7 @@ export function PatternPanel({ events }: { events: PatternEvent[] }) {
       ) : (
         <div
           key={latest.id}
-          className={`animate-drop rounded-xl border p-3 ${
+          className={`animate-drop rounded-none border p-3 ${
             latest.ok ? 'border-crust/30 bg-black/20' : 'border-pimenta/40 bg-pimenta/10'
           }`}
         >
@@ -78,7 +78,7 @@ export function PatternPanel({ events }: { events: PatternEvent[] }) {
             return (
               <li
                 key={e.id}
-                className="flex items-center justify-between gap-2 rounded-lg border border-white/5 bg-black/15 px-2.5 py-1.5"
+                className="flex items-center justify-between gap-2 rounded-none border border-white/5 bg-black/15 px-2.5 py-1.5"
               >
                 <span className="flex items-center gap-2 text-xs">
                   <span

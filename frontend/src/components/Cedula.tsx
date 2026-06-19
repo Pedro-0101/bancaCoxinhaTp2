@@ -19,7 +19,7 @@ export function Cedula({ denominacao, size = 'md', quantidade }: CedulaProps) {
   return (
     <span className="inline-flex items-center gap-1.5">
       <span
-        className={`${SIZES[size]} relative inline-flex items-center justify-center rounded-md font-mono font-bold text-white/95 shadow-sm`}
+        className={`${SIZES[size]} relative inline-flex items-center justify-center rounded-none font-mono font-bold text-white/95 shadow-sm`}
         style={{
           background: `linear-gradient(135deg, ${color}, color-mix(in oklab, ${color} 70%, black))`,
           border: '1px solid rgb(255 255 255 / 0.25)',

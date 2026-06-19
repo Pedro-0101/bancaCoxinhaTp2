@@ -9,7 +9,7 @@ interface ExtratoProps {
   sabores: Sabor[]
   clienteId: number
   busy: string | null
-  onTroca: (movimentacaoId: number, novoSabor: string, promocional: boolean) => void
+  onTroca: (movimentacaoId: number, saborAntigo: string, novoSabor: string, promocional: boolean) => void
   onDesfazer: (clienteIds: number[]) => void
 }
 
@@ -43,9 +43,9 @@ export function Extrato({
     [extrato],
   )
 
-  function confirmarTroca(movId: number) {
-    if (novoSabor) {
-      onTroca(movId, novoSabor, promo)
+  function confirmarTroca(movId: number, saborAntigo: string) {
+    if (novoSabor && saborAntigo) {
+      onTroca(movId, saborAntigo, novoSabor, promo)
       setTrocaAberta(null)
       setNovoSabor('')
       setPromo(false)
@@ -66,7 +66,7 @@ export function Extrato({
         </div>
 
         {/* Command: desfazer */}
-        <div className="flex flex-wrap items-end gap-2 rounded-xl border border-white/10 bg-black/20 px-3 py-2">
+        <div className="flex flex-wrap items-end gap-2 rounded-none border border-white/10 bg-black/20 px-3 py-2">
           <span className="w-full text-[11px] text-cream/50">
             Command · desfazer última transação
           </span>
@@ -91,7 +91,7 @@ export function Extrato({
               value={idsField}
               onChange={(e) => setIdsField(e.target.value)}
               placeholder="clienteIds"
-              className="w-24 rounded-lg border border-white/10 bg-black/30 px-2 py-1.5 font-mono text-xs text-cream focus:border-crust focus:outline-none"
+              className="w-24 rounded-none border border-white/10 bg-black/30 px-2 py-1.5 font-mono text-xs text-cream focus:border-crust focus:outline-none"
             />
             <Button
               variant="ghost"
@@ -107,16 +107,18 @@ export function Extrato({
 
       <ul className="flex flex-col gap-2">
         {extrato.length === 0 && (
-          <li className="rounded-xl border border-white/5 bg-black/15 px-4 py-6 text-center text-sm text-cream/40">
+          <li className="rounded-none border border-white/5 bg-black/15 px-4 py-6 text-center text-sm text-cream/40">
             Nenhuma movimentação ainda.
           </li>
         )}
         {extrato.map((m, idx) => {
-          const podeTrocar = m.tipoMovimentacao === 'SAIDA' && !estornadas.has(m.id)
+          const saboresNaMov = m.itens?.length > 0 ? m.itens.map((i) => i.sabor) : (m.sabor ? [m.sabor] : [])
+          const saborAntigo = saboresNaMov[0] ?? ''
+          const podeTrocar = m.tipoMovimentacao === 'SAIDA' && !estornadas.has(m.id) && saborAntigo !== ''
           return (
             <li
               key={m.id}
-              className={`rounded-xl border border-white/10 bg-black/20 px-4 py-3 ${
+              className={`rounded-none border border-white/10 bg-black/20 px-4 py-3 ${
                 idx === 0 ? 'animate-flash' : ''
               }`}
             >
@@ -127,12 +129,27 @@ export function Extrato({
                   {m.tipoMovimentacao}
                 </span>
                 <span className="font-mono text-xs text-cream/40">{horaMin(m.dataHora)}</span>
-                {m.sabor && <span className="font-display font-bold text-cream">{m.sabor}</span>}
+                {m.itens?.length > 0 ? (
+                  <span className="font-display font-bold text-cream">
+                    {m.itens.map((i) => `${i.quantidade > 1 ? `${i.quantidade}x ` : ''}${i.sabor}`).join(', ')}
+                  </span>
+                ) : m.sabor && (
+                  <span className="font-display font-bold text-cream">
+                    {m.quantidade > 1 ? `${m.quantidade}x ` : ''}{m.sabor}
+                  </span>
+                )}
                 <span className="ml-auto font-mono text-sm text-cream/60">
                   nota {brl(m.valorNota)} · valor{' '}
                   <span className="text-cream">{brl(m.valor)}</span>
                 </span>
               </div>
+
+              {m.pagamento?.length > 0 && (
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="text-xs text-cream/40">pagamento:</span>
+                  <TrocoStack troco={m.pagamento} size="sm" />
+                </div>
+              )}
 
               {m.troco.length > 0 && (
                 <div className="mt-2 flex items-center gap-2">
@@ -152,11 +169,11 @@ export function Extrato({
                       <select
                         value={novoSabor}
                         onChange={(e) => setNovoSabor(e.target.value)}
-                        className="rounded-lg border border-white/10 bg-black/30 px-2 py-1.5 text-sm text-cream focus:border-crust focus:outline-none"
+                        className="rounded-none border border-white/10 bg-black/30 px-2 py-1.5 text-sm text-cream focus:border-crust focus:outline-none"
                       >
                         <option value="">novo sabor…</option>
                         {sabores
-                          .filter((s) => s.sabor !== m.sabor)
+                          .filter((s) => !saboresNaMov.includes(s.sabor))
                           .map((s) => (
                             <option key={s.sabor} value={s.sabor}>
                               {s.sabor} · {brl(s.precoBase)}
@@ -172,7 +189,7 @@ export function Extrato({
                         promo
                       </label>
                       <Button
-                        onClick={() => confirmarTroca(m.id)}
+                        onClick={() => confirmarTroca(m.id, saborAntigo)}
                         disabled={busy !== null || !novoSabor}
                         className="px-3 py-1.5 text-sm"
                       >

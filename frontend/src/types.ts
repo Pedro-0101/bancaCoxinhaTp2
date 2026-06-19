@@ -24,21 +24,29 @@ export interface TrocoItem {
   quantidade: number
 }
 
+export interface ItemCoxinha {
+  sabor: string
+  quantidade: number
+  precoUnitario: number
+}
+
 export interface CompraResponse {
   movimentacaoId: number
-  sabor: string
+  itens: ItemCoxinha[]
   preco: number
+  pagamento: TrocoItem[]
   troco: TrocoItem[]
+  trocoEmCredito: number
   saldo: number
 }
 
 export interface TrocaResponse {
   estornoId: number
   novaMovimentacaoId: number
-  saborAnterior: string
-  novoSabor: string
+  itens: ItemCoxinha[]
   preco: number
   troco: TrocoItem[]
+  trocoEmCredito: number
   saldo: number
 }
 
@@ -48,9 +56,12 @@ export interface Movimentacao {
   tipoMovimentacao: TipoMovimentacao
   valorNota: number
   sabor: string | null
+  quantidade: number
   valor: number
+  pagamento: TrocoItem[]
   troco: TrocoItem[]
   movimentacaoOrigemId: number | null
+  itens: ItemCoxinha[]
 }
 
 export interface Slot {

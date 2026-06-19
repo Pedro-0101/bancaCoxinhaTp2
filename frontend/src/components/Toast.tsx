@@ -54,7 +54,7 @@ export function Toaster({
         <button
           key={t.id}
           onClick={() => onDismiss(t.id)}
-          className={`animate-drop pointer-events-auto flex items-start gap-3 rounded-xl border px-4 py-3 text-left text-sm shadow-lg backdrop-blur ${STYLES[t.kind]}`}
+          className={`animate-drop pointer-events-auto flex items-start gap-3 rounded-none border px-4 py-3 text-left text-sm shadow-lg backdrop-blur ${STYLES[t.kind]}`}
         >
           <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/15 font-mono text-xs font-bold">
             {ICONS[t.kind]}
